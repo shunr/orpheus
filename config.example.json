@@ -1,0 +1,13 @@
+{
+  "spotify": {
+    "clientId": "spotify-client-id",
+    "clientSecret": "spotify-client-secret",
+    "refreshInterval": 1800
+  },
+  "db": {
+    "storagePath": "/path/to/db.json"
+  },
+  "tracks": {
+    "minPopularity": 15
+  }
+}
