@@ -1,6 +1,6 @@
 var spawn = require('child_process').spawn,
-    py    = spawn('python3', ['src/test.py']),
-    data = [1,2,3,4];
+    py    = spawn('python3', ['orpheus/test.py']),
+    data = [[1, 1], [2, 1], [4, -1]];
 
 py.stdout.on('data', function(data){
   console.log(data.toString());

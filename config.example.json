@@ -5,9 +5,68 @@
     "refreshInterval": 1800
   },
   "db": {
-    "storagePath": "/path/to/db.json"
+    "storagePath": "/home/shun/orpheus_db/db.json",
+    "modelDirectory": "/home/shun/model"
   },
   "tracks": {
-    "minPopularity": 15
+    "minPopularity": 15,
+    "tracksPerGenre": 10
+  },
+  "featureMapping": {
+    "acousticness": {
+      "min": 0,
+      "max": 1,
+      "key": 0
+    },
+    "danceability": {
+      "min": 0,
+      "max": 1,
+      "key": 1
+    },
+    "energy": {
+      "min": 0,
+      "max": 1,
+      "key": 2
+    },
+    "instrumentalness": {
+      "min": 0,
+      "max": 1,
+      "key": 3
+    },
+    "key": {
+      "min": 0,
+      "max": 11,
+      "key": 4
+    },
+    "liveness": {
+      "min": 0,
+      "max": 1,
+      "key": 5
+    },
+    "loudness": {
+      "min": -30,
+      "max": 0,
+      "key": 6
+    },
+    "mode": {
+      "min": 0,
+      "max": 1,
+      "key": 7
+    },
+    "speechiness": {
+      "min": 0,
+      "max": 1,
+      "key": 8
+    },
+    "tempo": {
+      "min": 40,
+      "max": 180,
+      "key": 9
+    },
+    "valence": {
+      "min": 0,
+      "max": 1,
+      "key": 10
+    }
   }
 }

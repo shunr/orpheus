@@ -5,11 +5,14 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const io = require("socket.io")();
 
-const index = require('./routes/index');
+const index = require('./routes/index')(io);
 const orpheus = require('./orpheus/orpheus');
 
 let app = express();
+
+app.set('io', io);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -37,6 +40,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-orpheus.start();
+//orpheus.start();
 
 module.exports = app;
