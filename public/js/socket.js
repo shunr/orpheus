@@ -9,3 +9,5 @@ socket.on('new_token', function(data){
 });
 
 socket.on('disconnect', function(){});
+
+socket.emit('nextTrack');

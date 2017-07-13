@@ -11,20 +11,37 @@ router.get('/', function(req, res, next) {
 });
 
 function _sendNewToken(socket) {
-  socket.emit('new_token', uuid());
+  let token = uuid();
+  socket.emit('new_token', token);
+  db.createSession(token);
+  return token;
+}
+
+function _learningListener(socket, token) {
+  socket.on('nextTrack', function(){
+    console.log(db.getNextTrack(token));
+  });
+  
+  socket.on('nextTrack', function(){
+    console.log(db.getNextTrack(token));
+  });
+  
+  socket.on('nextTrack', function(){
+    console.log(db.getNextTrack(token));
+  });
+  
 }
 
 module.exports = function(io) {
   io.of('/learn').on('connection', function(socket) {
 
-    socket.emit('news', {
-      id: socket.id
-    });
-
     socket.on('token', function(token) {
+      let session = token;
       if (!db.isValidSessionToken(token)) {
-        _sendNewToken(socket);
+        session = _sendNewToken(socket);
       }
+      _learningListener(socket, session);
+      socket.emit('ready');
     });
     
   });

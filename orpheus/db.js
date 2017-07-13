@@ -4,9 +4,6 @@ const fs = require('fs');
 const path = require('path');
 
 const conf = require('../config');
-const TRACKS_KEY = 'tracks';
-const GENRES_KEY = 'genres';
-const AUTH_KEY = 'authString';
 
 let mod = module.exports = {};
 
@@ -15,46 +12,86 @@ let db = lowdb(conf.db.storagePath);
 db.defaults({
   genres: [],
   tracks: {},
-  numberOfTracks: 0
+  sessions: {}
 }).write();
 
+function _getShuffledTracks(maxTracks) {
+  let keys = Object.keys(db.get('tracks').value());
+  let shuffled = [];
+  let n = 0;
+  while (keys.length && n <= maxTracks) {
+    let i = Math.floor(Math.random() * keys.length);
+    let element = keys.splice(i, 1);
+    shuffled.push(element[0]);
+    n++;
+  }
+  return shuffled;
+}
+
 mod.setGenres = function(object) {
-  db.set(GENRES_KEY, object).write();
+  db.set('genres', object).write();
 };
 
 mod.setAuthString = function(string) {
-  db.set(AUTH_KEY, string).write();
+  db.set('authString', string).write();
 }
 
 mod.loadGenres = function() {
-  return db.get(GENRES_KEY).value();
+  return db.get('genres').value();
 }
 
 mod.loadAuthString = function() {
-  return db.get(AUTH_KEY).value();
+  return db.get('authString').value();
+}
+
+mod.getTrackFromId = function(id) {
+  return db.get(['tracks', id]).value();
+}
+
+mod.getNextTrack = function(token) {
+  let last = db.get(['sessions', token, 'queuedTracks']).head().value();
+  db.get(['sessions', token, 'queuedTracks']).pullAt(0).write();
+  console.log(db.get(['sessions', token, 'queuedTracks']).size().value());
+  return last;
+}
+
+mod.createSession = function(token) {
+  db.set(['sessions', token], {
+    token: token,
+    queuedTracks: _getShuffledTracks(conf.tracks.maxQueuedTracks),
+    currentTrack: 0
+  }).write();
+}
+
+mod.removeSession = function(token) {
+  db.unset(['sessions', token]).write();
 }
 
 mod.addTracks = function(tracks) {
   for (let i = 0; i < tracks.length; i++) {
     let track = tracks[i];
-    let existing = db.get([TRACKS_KEY, track.id]).value();
+    let existing = db.get(['tracks', track.id]).value();
     if (existing) {
-      db.get([TRACKS_KEY, track.id, 'genres']).push(track.genres[0]).write();
+      db.get(['tracks', track.id, 'genres']).push(track.genres[0]).write();
     } else {
-      let numTracks = db.get('numberOfTracks').value();
-      db.set(TRACKS_KEY + '.' + track.id, track).write();
-      db.set('numberOfTracks', numTracks + 1).write();
+      db.set(['tracks', track.id], track).write();
     }
   }
+ 
 }
 
 mod.clear = function() {
-  db.set(GENRES_KEY, []).write();
-  db.set(TRACKS_KEY, {}).write();
+  db.set('genres', []).write();
+  db.set('tracks', {}).write();
+  db.set('sessions', {}).write();
   db.set('numberOfTracks', 0).write();
+};
+
+mod.clearSessions = function() {
+  db.set('sessions', {}).write();
 };
 
 mod.isValidSessionToken = function(token) {
   if (!token) return false;
-  return fs.existsSync(path.join(conf.db.modelDirectory, token));
+  return db.get(['sessions', token]).value();
 }

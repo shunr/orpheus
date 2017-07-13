@@ -40,6 +40,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//orpheus.start();
+orpheus.start();
 
 module.exports = app;

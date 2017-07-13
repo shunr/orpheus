@@ -7,14 +7,18 @@ const parser = require('./parser');
 let mod = module.exports = {};
 
 mod.start = function() {
-  mod.auth(_setupDb);
+  //mod.auth(_setupDb);
+  mod.auth();
+  db.clearSessions();
 };
 
 mod.auth = function(callback) {
   spotify.refreshAccessToken(function(authString) {
     if (authString) {
       db.setAuthString(authString);
-      callback();
+      if (callback) {
+        callback();
+      }
     }
   });
 }
@@ -46,7 +50,6 @@ function _iterateGenres(authString, genres, i) {
     spotify.getFeatures(authString, parser.getTrackIds(tracks), function(features) {
       let formatted = parser.formatTracks(tracks, features, genres[i], i);
       db.addTracks(formatted);
-      console.log(i);
       if (i < genres.length) {
         _iterateGenres(authString, genres, i + 1);
       }
