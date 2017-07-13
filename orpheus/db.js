@@ -1,5 +1,8 @@
 'use strict'
 const lowdb = require('lowdb');
+const fs = require('fs');
+const path = require('path');
+
 const conf = require('../config');
 const TRACKS_KEY = 'tracks';
 const GENRES_KEY = 'genres';
@@ -15,11 +18,11 @@ db.defaults({
   numberOfTracks: 0
 }).write();
 
-mod.setGenres = function (object) {
+mod.setGenres = function(object) {
   db.set(GENRES_KEY, object).write();
 };
 
-mod.setAuthString = function (string) {
+mod.setAuthString = function(string) {
   db.set(AUTH_KEY, string).write();
 }
 
@@ -41,10 +44,6 @@ mod.addTracks = function(tracks) {
       let numTracks = db.get('numberOfTracks').value();
       db.set(TRACKS_KEY + '.' + track.id, track).write();
       db.set('numberOfTracks', numTracks + 1).write();
-      if (numTracks % 100 === 0) {
-        console.log(numTracks);
-      }
-      
     }
   }
 }
@@ -54,3 +53,8 @@ mod.clear = function() {
   db.set(TRACKS_KEY, {}).write();
   db.set('numberOfTracks', 0).write();
 };
+
+mod.isValidSessionToken = function(token) {
+  if (!token) return false;
+  return fs.existsSync(path.join(conf.db.modelDirectory, token));
+}

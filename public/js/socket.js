@@ -1,15 +1,11 @@
 var socket = io('http://162.243.171.232:3000/learn');
 
-function get() {
-  
-  localStorage.setItem("sessionToken", "");
-}
-
 socket.on('connect', function(){
-  console.log('woo');
+  socket.emit('token', localStorage.getItem('sessionToken'));
 });
 
-socket.on('news', function(data){
-  console.log(data);
+socket.on('new_token', function(data){
+  localStorage.setItem('sessionToken', data);
 });
+
 socket.on('disconnect', function(){});
