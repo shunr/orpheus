@@ -4,10 +4,30 @@ socket.on('connect', function(){
   socket.emit('token', localStorage.getItem('sessionToken'));
 });
 
+socket.on('disconnect', function(){
+  socket.disconnect();
+});
+
 socket.on('new_token', function(data){
   localStorage.setItem('sessionToken', data);
 });
 
-socket.on('disconnect', function(){});
+socket.on('new_track', function(data){
+  console.log(data);
+});
 
-socket.emit('nextTrack');
+socket.on('ready', function(data){
+  nextTrack();
+});
+
+function nextTrack() {
+  socket.emit('track_skip');
+}
+
+function rateGood() {
+  socket.emit('track_good');
+}
+
+function rateBad() {
+  socket.emit('track_bad');
+}

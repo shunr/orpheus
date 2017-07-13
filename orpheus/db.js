@@ -1,7 +1,5 @@
 'use strict'
 const lowdb = require('lowdb');
-const fs = require('fs');
-const path = require('path');
 
 const conf = require('../config');
 
@@ -51,7 +49,6 @@ mod.getTrackFromId = function(id) {
 mod.getNextTrack = function(token) {
   let last = db.get(['sessions', token, 'queuedTracks']).head().value();
   db.get(['sessions', token, 'queuedTracks']).pullAt(0).write();
-  console.log(db.get(['sessions', token, 'queuedTracks']).size().value());
   return last;
 }
 
@@ -77,13 +74,11 @@ mod.addTracks = function(tracks) {
       db.set(['tracks', track.id], track).write();
     }
   }
- 
 }
 
 mod.clear = function() {
   db.set('genres', []).write();
   db.set('tracks', {}).write();
-  db.set('sessions', {}).write();
   db.set('numberOfTracks', 0).write();
 };
 

@@ -5,29 +5,31 @@ const spotify = require('./spotify');
 const parser = require('./parser');
 
 let mod = module.exports = {};
+let setupDb = false;
 
-mod.start = function() {
-  //mod.auth(_setupDb);
-  mod.auth();
+mod.start = function(callback) {
   db.clearSessions();
+  if (setupDb) {
+    mod.auth(callback, setupDb);
+  } else {
+    callback();
+  }
 };
 
 mod.auth = function(callback) {
   spotify.refreshAccessToken(function(authString) {
     if (authString) {
       db.setAuthString(authString);
-      if (callback) {
-        callback();
-      }
+      _setupDb(callback);
     }
   });
 }
 
-function _setupDb() {
+function _setupDb(callback) {
   db.clear();
   let authString = db.loadAuthString();
   _setupGenres(function() {
-    _setupTracks();
+    _setupTracks(callback);
   });
 }
 
@@ -45,14 +47,20 @@ function _setupTracks(callback) {
   _iterateGenres(authString, genres, 0);
 }
 
-function _iterateGenres(authString, genres, i) {
+function _iterateGenres(authString, genres, i, callback) {
   spotify.getRecommendations(authString, genres[i], conf.tracks.trackspPerGenre, function(tracks) {
     spotify.getFeatures(authString, parser.getTrackIds(tracks), function(features) {
       let formatted = parser.formatTracks(tracks, features, genres[i], i);
       db.addTracks(formatted);
       if (i < genres.length) {
         _iterateGenres(authString, genres, i + 1);
+      } else {
+        callback();
       }
     });
   });
+}
+
+function _done() {
+
 }
