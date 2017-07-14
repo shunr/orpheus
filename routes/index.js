@@ -25,17 +25,17 @@ function _trainModel(token, trackId, verdict, callback) {
 
 function _learningListener(socket, token) {
   let id = _sendNextTrack(socket, token);
-  socket.on('track_good', function(){
-    _trainModel(token, id, 1, function(){
+  socket.on('track_good', function() {
+    _trainModel(token, id, 1, function() {
       id = _sendNextTrack(socket, token);
     });
   });
-  socket.on('track_bad', function(){
-    _trainModel(token, id, -1, function(){
+  socket.on('track_bad', function() {
+    _trainModel(token, id, -1, function() {
       id = _sendNextTrack(socket, token);
     });
   });
-  socket.on('track_skip', function(){
+  socket.on('track_skip', function() {
     _sendNextTrack(socket, token);
   });
 }
@@ -57,13 +57,16 @@ module.exports = function(io) {
       if (!db.isValidSessionToken(token)) {
         session = _sendNewToken(socket);
       }
-      _learningListener(socket, session);
+      socket.emit('ready');
+      socket.on('ready', function(token) {
+        _learningListener(socket, session);
+      })
     });
-    
+
   });
   return router;
 }
 
-router.setReady = function () {
+router.setReady = function() {
   ready = true;
 }

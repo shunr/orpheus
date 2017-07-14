@@ -1,23 +1,22 @@
-var socket = io('http://162.243.171.232:3000/learn');
+var socket = io('http://162.243.171.232/learn');
 
-socket.on('connect', function(){
+socket.on('connect', function() {
   socket.emit('token', localStorage.getItem('sessionToken'));
 });
 
-socket.on('disconnect', function(){
+socket.on('disconnect', function() {
   socket.disconnect();
 });
 
-socket.on('new_token', function(data){
+socket.on('new_token', function(data) {
   localStorage.setItem('sessionToken', data);
 });
 
-socket.on('new_track', function(data){
-  playTrack(data.preview_url);
-});
-
-socket.on('ready', function(data){
+socket.on('ready', function(data) {
   nextTrack();
+  socket.on('new_track', function(data) {
+    playTrack(data.preview_url);
+  });
 });
 
 function nextTrack() {
@@ -30,4 +29,8 @@ function rateGood() {
 
 function rateBad() {
   socket.emit('track_bad');
+}
+
+function start() {
+  socket.emit('ready');
 }

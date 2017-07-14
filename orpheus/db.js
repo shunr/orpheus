@@ -1,4 +1,6 @@
 'use strict'
+const fs = require('fs');
+const rimraf = require('rimraf');
 const lowdb = require('lowdb');
 
 const conf = require('../config');
@@ -83,7 +85,13 @@ mod.clear = function() {
 };
 
 mod.clearSessions = function() {
+  let dir = conf.db.modelDirectory;
   db.set('sessions', {}).write();
+  rimraf(dir, function() {
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+  });
 };
 
 mod.isValidSessionToken = function(token) {
