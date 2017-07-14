@@ -1,6 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  script(src='/js/socket.js')
+  canvas(id="bg-canvas")
+  audio(id="audio")
+  div(class="centered-element")
+    div(class="ui three huge buttons")
+      button(class="ui icon button positive" onclick="rateGood()")
+        i(class="thumbs down icon")
+      button(class="ui right icon button" onclick="nextTrack()")
+        i(class="step forward icon")
+      button(class="ui right icon raised button negative" onclick="rateBad()")
+        i(class="thumbs up icon")
+ 
+block scripts  
+  script(src="/js/socket.js")
+  script(src="/js/audio.js")

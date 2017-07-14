@@ -13,7 +13,7 @@ socket.on('new_token', function(data){
 });
 
 socket.on('new_track', function(data){
-  console.log(data);
+  playTrack(data.preview_url);
 });
 
 socket.on('ready', function(data){

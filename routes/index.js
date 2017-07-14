@@ -8,7 +8,7 @@ let ready = false;
 
 router.get('/', function(req, res, next) {
   res.render('index', {
-    title: 'Express'
+    title: 'Orpheus - Quantify your music taste'
   });
 });
 

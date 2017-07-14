@@ -1,8 +1,22 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Roboto", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  background-color: #fcfcfc;
 }
 
-a {
-  color: #00B7FF;
+.centered-element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#bg-canvas {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  height:100%;
+  width:100%;
+  z-index: -1;
 }

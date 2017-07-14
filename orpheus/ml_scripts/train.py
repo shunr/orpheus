@@ -1,19 +1,23 @@
 import oll
-# You can choose algorithms in
-# "P" -> Perceptron,
-# "AP" -> Averaged Perceptron,
-# "PA" -> Passive Agressive,
-# "PA1" -> Passive Agressive-I,
-# "PA2" -> Passive Agressive-II,
-# "PAK" -> Kernelized Passive Agressive,
-# "CW" -> Confidence Weighted Linear-Classification,
-# "AL" -> ALMA
-o = oll.oll("CW", C=1.0, bias=0.0)
-o.add({0: 1.0, 1: 1.0, 2: 1.0, 4: 1.0, 4: 1, 9: 1}, -1)
-o.add({0: 1.0, 1: -1.0, 2: 1.0, 3: -1.0, 7: 1}, -1)# train
-o.add({0: -1.0, 1: -0.2, 2: 0.0, 8: 1}, 1)
-o.add({0: -1.0, 1: 1.0, 2: 0.0, 4: 1, 5: 1, 7: 1}, 1)
+import os, sys, json
 
-print(o.classify({0: -1}))  # predict
-o.save('oll.model')
-o.load('oll.model')
+conf = {}
+with open('config.json') as config_file:    
+  conf = json.load(config_file)
+
+def main():
+  session = sys.argv[1]
+  features = dict(json.loads(sys.argv[2]))
+  verdict = int(sys.argv[3])
+  path = os.path.join(conf["db"]["modelDirectory"], session)
+  params = conf["hyperParams"]
+  
+  model = oll.oll(params["algorithm"], C=params["regularization"], bias=params["bias"])
+  model.load(path)
+  #print(verdict)
+  #print(model.classify(features))
+  model.add(features, verdict)
+  model.save(path)
+  
+if __name__ == '__main__':
+  main()
