@@ -13,6 +13,11 @@
     "tracksPerGenre": 10,
     "maxQueuedTracks": 1000
   },
+  "hyperParams": {
+    "regularization": 1.0,
+    "bias": 0.0,
+    "algorithm": "CW"
+  },
   "featureMapping": {
     "acousticness": {
       "min": 0,
