@@ -1,32 +1,52 @@
 extends layout
 
 block content
-  canvas(id="bg-canvas")
   audio(id="audio")
-  div(class="centered-element")
-    div(class="ui centered three column grid")
-      div(class="column")
-        button(class="ui circular huge icon button positive" onclick="rateGood()")
-          i(class="thumbs up icon")
-      div(class="column")
-        button(class="ui circular huge icon button" onclick="nextTrack()")
-          i(class="step forward icon")
-      div(class="column")
-        button(class="ui circular huge icon button negative" onclick="rateBad()")
-          i(class="thumbs down icon")
-    br
-    br
-    div(class="ui centered four column grid")
-      div(class="column")
-        button(class="ui circular icon button")
-          i(class="thumbs up icon")
-      div(class="column")
-        button(class="ui circular icon button")
-          i(class="thumbs up icon")
-      div(class="column")
-        button(class="ui circular icon button")
-          i(class="thumbs up icon")
- 
+  div(id="orpheus")
+    canvas(id="bg-canvas")
+    div(id="progress-overlay")
+  div(class="ui text container")
+    div(id="controls" class="ui card center align")
+      div(class="content")
+        div(class="ui center aligned four column grid")
+          div(class="column")
+            button(class="ui circular huge icon button violet centered-element" data-tooltip="Menu" data-inverted="" onclick="menu()")
+              i(class="ellipsis horizontal icon")
+          div(class="column")
+            button(class="ui circular huge icon button positive centered-element action-button" data-tooltip="I like this song" data-inverted="" onclick="rateGood()")
+              i(class="thumbs up icon")
+          div(class="column")
+            button(class="ui circular huge icon button grey centered-element action-button" data-tooltip="Skip this song" data-inverted="" onclick="nextTrack()")
+              i(class="step forward icon")
+          div(class="column")
+            button(class="ui circular huge icon button negative centered-element action-button" data-tooltip="I don't like this song" data-inverted="" onclick="rateBad()")
+              i(class="thumbs down icon")
+            br
+            br
+          
+  div(class="ui mini modal start-modal")
+    div(class="content hello-content")
+      div(class="ui center aligned icon header")
+        i(class="circular lab violet icon")
+        div(class="content")
+          h1(class="ui header grey thin inline") hi, i'm
+          h1(class="ui header violet inline") &nbsp;orpheus
+          div(class="ui sub header") i can quantify your music tastes
+      div(class="column center align")
+        div(class="ui large icon button")
+          i(class="help icon")
+        div(class="ui violet large button" onclick="start()")
+          i(class="sound icon")
+          | START
+      a(class="ui top right attached label" target="_blank" href="https://github.com/shunr/orpheus") 
+        i(class="github icon")
+        | source
+        
+  div(class="ui modal menu-modal")
+    div(class="header") Orpheus
+    div(class="content")
+      | Hello world
+          
 block scripts  
   script(src="/js/socket.js")
   script(src="/js/audio.js")

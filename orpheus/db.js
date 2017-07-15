@@ -29,7 +29,13 @@ function _getShuffledTracks(maxTracks) {
 }
 
 mod.setGenres = function(object) {
-  db.set('genres', object).write();
+  let genres = [];
+  for (let i = 0; i < object.length; i++) {
+    if (conf.tracks.ignoredGenres.indexOf(object[i]) == -1) {
+      genres.push(object[i]);
+    }
+  }
+  db.set('genres', genres).write();
 };
 
 mod.setAuthString = function(string) {

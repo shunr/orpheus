@@ -5,7 +5,7 @@ const spotify = require('./spotify');
 const parser = require('./parser');
 
 let mod = module.exports = {};
-let setupDb = false;
+let setupDb = true;
 
 mod.start = function(callback) {
   db.clearSessions();
@@ -48,6 +48,7 @@ function _setupTracks(callback) {
 }
 
 function _iterateGenres(authString, genres, i, callback) {
+  console.log(genres[i]);
   spotify.getRecommendations(authString, genres[i], conf.tracks.trackspPerGenre, function(tracks) {
     spotify.getFeatures(authString, parser.getTrackIds(tracks), function(features) {
       let formatted = parser.formatTracks(tracks, features, genres[i], i);
