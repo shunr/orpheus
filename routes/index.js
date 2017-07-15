@@ -43,7 +43,14 @@ function _learningListener(socket, token) {
 function _sendNextTrack(socket, token) {
   let id = db.getNextTrack(token);
   socket.emit('new_track', db.getTrackFromId(id));
+  _sendTrainingResults(socket, token);
   return id;
+}
+
+function _sendTrainingResults(socket, token) {
+  train.getTrainingResults(token, function(data){
+    socket.emit('model_updated', data);
+  });
 }
 
 module.exports = function(io) {

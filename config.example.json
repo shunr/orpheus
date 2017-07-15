@@ -4,14 +4,17 @@
     "clientSecret": "spotify-client-secret",
     "refreshInterval": 1800
   },
-   "db": {
+  "db": {
     "storagePath": "/home/shun/orpheus_db/db.json",
-    "modelDirectory": "/home/shun/model"
+    "modelDirectory": "/home/shun/orpheus_db/model"
   },
   "tracks": {
-    "minPopularity": 15,
+    "minPopularity": 10,
     "tracksPerGenre": 10,
-    "maxQueuedTracks": 1000
+    "maxQueuedTracks": 1000,
+    "ignoredGenres": [
+      "comedy"
+    ]
   },
   "hyperParams": {
     "regularization": 1.0,

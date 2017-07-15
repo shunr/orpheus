@@ -5,7 +5,7 @@ const spotify = require('./spotify');
 const parser = require('./parser');
 
 let mod = module.exports = {};
-let setupDb = true;
+let setupDb = false;
 
 mod.start = function(callback) {
   db.clearSessions();
@@ -44,24 +44,20 @@ function _setupGenres(callback) {
 function _setupTracks(callback) {
   let authString = db.loadAuthString();
   let genres = db.loadGenres();
-  _iterateGenres(authString, genres, 0);
+  _iterateGenres(authString, genres, 0, callback);
 }
 
 function _iterateGenres(authString, genres, i, callback) {
-  console.log(genres[i]);
-  spotify.getRecommendations(authString, genres[i], conf.tracks.trackspPerGenre, function(tracks) {
-    spotify.getFeatures(authString, parser.getTrackIds(tracks), function(features) {
-      let formatted = parser.formatTracks(tracks, features, genres[i], i);
-      db.addTracks(formatted);
-      if (i < genres.length) {
-        _iterateGenres(authString, genres, i + 1);
-      } else {
-        callback();
-      }
+  console.log(genres[i], i, genres.length);
+  if (i < genres.length) {
+    spotify.getRecommendations(authString, genres[i], conf.tracks.trackspPerGenre, function(tracks) {
+      spotify.getFeatures(authString, parser.getTrackIds(tracks), function(features) {
+        let formatted = parser.formatTracks(tracks, features, genres[i], i);
+        db.addTracks(formatted);
+        _iterateGenres(authString, genres, i + 1, callback);
+      });
     });
-  });
-}
-
-function _done() {
-
+  } else {
+    callback();
+  }
 }

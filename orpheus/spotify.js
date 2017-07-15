@@ -61,7 +61,7 @@ mod.getRecommendations = function(authString, seedGenre, limit, callback) {
       let object = JSON.parse(body);
       callback(object.tracks);
     } else {
-      // Log error
+      callback([]);
     }
   });
 }

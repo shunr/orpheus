@@ -59,10 +59,10 @@ function resetProgress() {
 }
 
 function cooldown() {
-  $('#action-button').addClass('disabled');
+  $('.action-button').addClass('disabled');
   setTimeout(function() {
-    $('#action-button').removeClass('disabled');
-  }, 3600)
+    $('.action-button').removeClass('disabled');
+  }, 3000)
 }
 
 function menu() {

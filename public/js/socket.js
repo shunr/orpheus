@@ -14,7 +14,11 @@ socket.on('new_token', function(data) {
 socket.on('ready', function(data) {
   nextTrack();
   socket.on('new_track', function(data) {
+    console.log(data);
     playTrack(data.preview_url);
+  });
+  socket.on('model_updated', function(data) {
+    console.log(data);
   });
 });
 
