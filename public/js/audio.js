@@ -47,22 +47,22 @@ function playTrack(src) {
 function animateProgress() {
   $('#progress-overlay').stop();
   $('#progress-overlay').css("width", 0);
+  $('#progress-overlay').show();
   $('#progress-overlay').animate({
     width: "100%"
   }, 30 * 1000);
   siriWave.setAmplitude(0.3);
+  $('.action-button').removeClass('disabled');
 }
 
 function resetProgress() {
   $('#progress-overlay').fadeOut();
   siriWave.setAmplitude(0.01);
+  $('.track-header').fadeOut();
 }
 
 function cooldown() {
   $('.action-button').addClass('disabled');
-  setTimeout(function() {
-    $('.action-button').removeClass('disabled');
-  }, 3000)
 }
 
 function menu() {

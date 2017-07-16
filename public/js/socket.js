@@ -1,4 +1,5 @@
 var socket = io('http://162.243.171.232/learn');
+
 socket.on('connect', function() {
   socket.emit('token', localStorage.getItem('sessionToken'));
 });
@@ -16,9 +17,12 @@ socket.on('ready', function(data) {
   socket.on('new_track', function(data) {
     console.log(data);
     playTrack(data.preview_url);
+    $('.track-header span').text(data.name);
+    $('.track-header').fadeIn();
   });
   socket.on('model_updated', function(data) {
     console.log(data);
+    stats.updateModel(data);
   });
 });
 

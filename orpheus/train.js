@@ -17,7 +17,12 @@ mod.trainModel = function(token, features, verdict, callback) {
 };
 
 mod.getTrainingResults = function(token, callback) {
-  let py = spawn('python3', ['orpheus/ml_scripts/classify.py', token, 11, 120]);
+  let py = spawn('python3', [
+    'orpheus/ml_scripts/classify.py',
+    token,
+    Object.keys(conf.featureMapping).length,
+    db.loadGenres().length
+  ]);
   py.stdout.on('data', function(data) {
     callback(JSON.parse(data.toString()));
   });

@@ -28,8 +28,8 @@ def main():
   for feature, val in feature_mapping.items():
     output['feature_preference'][feature] = feature_indices[val['key']]
     
-  for i in range(feature_count, feature_count + genre_count):
-    pref = model.classify({i: 1})
+  for i in range(genre_count):
+    pref = model.classify({i + feature_count: 1})
     if pref != 0:
       bisect.insort(output['genre_ranking'], (pref, i))
     

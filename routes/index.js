@@ -2,13 +2,16 @@ const express = require('express');
 const uuid = require('uuid/v4');
 const db = require('../orpheus/db');
 const train = require('../orpheus/train');
+const conf = require('../config');
 const router = express.Router();
 
 let ready = false;
 
 router.get('/', function(req, res, next) {
   res.render('index', {
-    title: 'Orpheus - Quantify your music taste'
+    title: 'Orpheus - Quantify your music taste',
+    featureMapping: conf.featureMapping,
+    genres: db.loadGenres()
   });
 });
 

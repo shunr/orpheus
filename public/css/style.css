@@ -7,8 +7,26 @@ body {
   background-color: #333;
 }
 
+.modal {
+  min-width: 320px;
+}
+
+.track-header {
+  position: relative;
+  width: 100%;
+  top: 16px;
+}
+
 .column {
   text-align: center;
+}
+
+.progress .bar {
+  min-width: 0!important;
+}
+
+.progress {
+  margin: 0!important;
 }
 
 .inline {
@@ -29,6 +47,18 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.content-stats .grid {
+  position:relative;
+}
+
+.column-genre {
+  line-height: 2em!important;
+}
+
+.column-genre .header {
+  margin:0!important;
 }
 
 #bg-canvas {
@@ -77,4 +107,5 @@ body {
   left: 0;
   right: 0;
   bottom: 16px;
+  min-width: 320px;
 }

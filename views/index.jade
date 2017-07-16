@@ -6,12 +6,15 @@ block content
     canvas(id="bg-canvas")
     div(id="progress-overlay")
   div(class="ui text container")
+    h2(class="ui center aligned inverted header track-header" style="display: none")
+      div(class="ui sub header") now playing
+      span(id="current-track")
     div(id="controls" class="ui card center align")
       div(class="content")
         div(class="ui center aligned four column grid")
           div(class="column")
             button(class="ui circular huge icon button violet centered-element" data-tooltip="Menu" data-inverted="" onclick="menu()")
-              i(class="ellipsis horizontal icon")
+              i(class="sidebar horizontal icon")
           div(class="column")
             button(class="ui circular huge icon button positive centered-element action-button" data-tooltip="I like this song" data-inverted="" onclick="rateGood()")
               i(class="thumbs up icon")
@@ -43,10 +46,48 @@ block content
         | source
         
   div(class="ui modal menu-modal")
-    div(class="header") Orpheus
-    div(class="content")
-      | Hello world
+    i(class="close icon")
+    div(class="header")
+      h2(class="ui content violet header")
+        i(class="tasks icon")
+        div(class="content")
+          | learning progress
+          div(class="sub header") here's what i learned about your listening preferences
+    div(class="header")
+      div(class="ui stackable two column grid")
+        div(class="column column-genre")
+          div(class="ui tiny header") your top 3 genres
+          div(class="ui large yellow label") country
+            div(class="detail") 1
+          div(class="ui large grey label") alt-rock
+            div(class="detail") 2
+          div(class="ui large brown label") mememusic
+            div(class="detail") 3
+        div(class="column column-genre")
+          div(class="ui tiny header") your bottom 3 genres
+          div(class="ui large yellow label") 1
+            div(class="detail") country
+    div(class="content content-stats")
+        for val, i in featureMapping
+          div(class="ui padded center aligned grid")
+            div(class="ui huge sub header") #{i}
+            div(class="ui four column row")
+              div(dir="rtl" class="eight wide column")
+                div(class="ui violet small progress" id="bar-#{i}-1")
+                  div(class="bar")
+              div(class="eight wide column")
+                div(class="ui violet small progress" id="bar-#{i}1")
+                  div(class="bar")
+              div(class="ui circular violet icon button centered-element")
+                i(class="#{featureMapping[i].icon} icon")
+           br
+    div(class="actions")
+      div(class="ui violet deny button") cool
           
 block scripts  
   script(src="/js/socket.js")
   script(src="/js/audio.js")
+  script(src="/js/statistics.js")
+  script(type="text/javascript").
+    var featureMapping = !{JSON.stringify(featureMapping)}
+    var genres = !{JSON.stringify(genres)}
