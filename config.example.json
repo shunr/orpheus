@@ -10,7 +10,7 @@
   },
   "tracks": {
     "minPopularity": 10,
-    "tracksPerGenre": 10,
+    "tracksPerGenre": 100,
     "maxQueuedTracks": 1000,
     "ignoredGenres": [
       "comedy",

@@ -15,7 +15,9 @@ def load(path):
   
 def main():
   session = sys.argv[1]
-  features = dict(json.loads(sys.argv[2]))
+  useful = int(sys.argv[3])
+  all_features = json.loads(sys.argv[2])
+  features = dict(all_features[:useful])
   verdict = int(sys.argv[3])
   path = os.path.join(conf['db']['modelDirectory'], session)
   genre_path = os.path.join(conf['db']['modelDirectory'], session + '.g')
@@ -30,7 +32,7 @@ def main():
   if os.path.isfile(genre_path):
     feature_histo = load(genre_path)
     
-  for i in features:
+  for i in dict(all_features):
     if i in feature_histo:
       feature_histo[i] += verdict
     else:

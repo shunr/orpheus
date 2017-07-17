@@ -3,7 +3,7 @@ var stats = (function() {
   var module = {}
   
   module.updateModel = function(data) {
-    $('#trained-songs').text(data.trainedSongs - 1);
+    $('#trained-songs').text(data.trainedSongs);
     for (var f in data.feature_preference) {
       var val = data.feature_preference[f];
       var percent = (50 + Math.min(val / RANGE * 50, 50));

@@ -31,6 +31,7 @@ socket.on('new_prediction', function(data) {
 
 socket.on('model_updated', function(data) {
   stats.updateModel(data);
+  console.log(data);
 });
 
 function nextTrack() {

@@ -38,7 +38,7 @@ function _formatFeatureSet(features, genreIndex) {
       formatted.push([featureMapping[i].key, _normalize(min, max, features[i])]);
     }
   }
-  //formatted.push([Object.keys(featureMapping).length + genreIndex, 1]);
+  formatted.push([Object.keys(featureMapping).length + genreIndex, 1]);
   return formatted;
 }
 
