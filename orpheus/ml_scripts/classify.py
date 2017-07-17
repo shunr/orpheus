@@ -3,8 +3,11 @@ import os, sys, json
 import bisect
 
 conf = {}
+feature_mapping = {}
 with open('config.json') as config_file:    
   conf = json.load(config_file)
+with open('feature_mapping.json') as feature_file:    
+  feature_mapping = json.load(feature_file)
   
 def main():
   output = {
@@ -17,7 +20,6 @@ def main():
   genre_count = int(sys.argv[3])
   path = os.path.join(conf["db"]["modelDirectory"], session)
   params = conf["hyperParams"]
-  feature_mapping = conf["featureMapping"]
   
   model = oll.oll(params["algorithm"], C=params["regularization"], bias=params["bias"])
   model.load(path)

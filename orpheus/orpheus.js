@@ -5,7 +5,7 @@ const spotify = require('./spotify');
 const parser = require('./parser');
 
 let mod = module.exports = {};
-let setupDb = false;
+let setupDb = conf.db.firstInitialization;
 
 mod.start = function(callback) {
   db.clearSessions();
@@ -47,11 +47,20 @@ function _setupTracks(callback) {
   _iterateGenres(authString, genres, 0, callback);
 }
 
+let sumloud = 0, sumtempo = 0, num = 0;
+
 function _iterateGenres(authString, genres, i, callback) {
   console.log(genres[i], i, genres.length);
+  console.log("loud: " + sumloud/num);
+  console.log("tempo: "  + sumtempo/num);
   if (i < genres.length) {
-    spotify.getRecommendations(authString, genres[i], conf.tracks.trackspPerGenre, function(tracks) {
+    spotify.getRecommendations(authString, genres[i], conf.tracks.tracksPerGenre, function(tracks) {
       spotify.getFeatures(authString, parser.getTrackIds(tracks), function(features) {
+        for (let i = 0; i < features.length; i++) {
+          sumloud += features[i].loudness;
+          sumtempo += features[i].tempo;
+          num += 1;
+        }
         let formatted = parser.formatTracks(tracks, features, genres[i], i);
         db.addTracks(formatted);
         _iterateGenres(authString, genres, i + 1, callback);

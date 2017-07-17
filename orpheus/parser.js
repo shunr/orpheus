@@ -1,7 +1,7 @@
 'use strict'
 const conf = require('../config');
 const db = require('./db');
-const featureMapping = conf.featureMapping;
+const featureMapping = require('../feature_mapping');
 
 let mod = module.exports = {};
 

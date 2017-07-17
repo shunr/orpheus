@@ -2,6 +2,7 @@ const spawn = require('child_process').spawn;
 
 const db = require('./db');
 const conf = require('../config');
+const featureMapping = require('../feature_mapping');
 
 let mod = module.exports = {};
 
@@ -20,7 +21,7 @@ mod.getTrainingResults = function(token, callback) {
   let py = spawn('python3', [
     'orpheus/ml_scripts/classify.py',
     token,
-    Object.keys(conf.featureMapping).length,
+    Object.keys(featureMapping).length,
     db.loadGenres().length
   ]);
   py.stdout.on('data', function(data) {

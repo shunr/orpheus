@@ -5,6 +5,8 @@ block content
   div(id="orpheus")
     canvas(id="bg-canvas")
     div(id="progress-overlay")
+    div(class="ui dimmer")
+      div(class="ui loader")
   div(class="ui text container")
     h2(class="ui center aligned inverted header track-header" style="display: none")
       div(class="ui sub header") now playing
@@ -45,44 +47,66 @@ block content
         i(class="github icon")
         | source
         
-  div(class="ui modal menu-modal")
-    i(class="close icon")
-    div(class="header")
-      h2(class="ui content violet header")
-        i(class="tasks icon")
+  div(class="ui modal basic menu-modal")
+    div(class="ui inverted violet segment")
+      div(class="ui top right attached violet huge label" onclick="hideMenu()" style="cursor:pointer") &times;
+      h2(id="menu-header" class="ui content inverted header")
+        i(class="pie chart icon")
         div(class="content")
-          | learning progress
-          div(class="sub header") here's what i learned about your listening preferences
-    div(class="header")
+          | your music tastes
+          div(class="sub header") here's what orpheus learned about your listening preferences
+    div(class="ui top attached piled segment")
       div(class="ui stackable two column grid")
         div(class="column column-genre")
-          div(class="ui tiny header") your top 3 genres
-          div(class="ui large yellow label") country
-            div(class="detail") 1
-          div(class="ui large grey label") alt-rock
-            div(class="detail") 2
-          div(class="ui large brown label") mememusic
-            div(class="detail") 3
+          h2(class="ui left aligned green header")
+            i(class="thumbs up icon")
+            div(class="content")
+              | best genres
+              div(class="sub header") your top 3 favourite genres
+          for i in [1,2,3]
+            div(class="ui large green label" id="best-genre-#{i-1}")
+              span nothing
+              div(class="detail") #{i}
         div(class="column column-genre")
-          div(class="ui tiny header") your bottom 3 genres
-          div(class="ui large yellow label") 1
-            div(class="detail") country
-    div(class="content content-stats")
-        for val, i in featureMapping
-          div(class="ui padded center aligned grid")
-            div(class="ui huge sub header") #{i}
-            div(class="ui four column row")
-              div(dir="rtl" class="eight wide column")
-                div(class="ui violet small progress" id="bar-#{i}-1")
-                  div(class="bar")
-              div(class="eight wide column")
-                div(class="ui violet small progress" id="bar-#{i}1")
-                  div(class="bar")
-              div(class="ui circular violet icon button centered-element")
-                i(class="#{featureMapping[i].icon} icon")
-           br
-    div(class="actions")
-      div(class="ui violet deny button") cool
+          h2(class="ui left aligned red header")
+            i(class="thumbs down icon")
+            div(class="content")
+              | worst genres
+              div(class="sub header") your 3 least favourite genres
+          for i in [1,2,3]
+            div(class="ui large red label" id="worst-genre-#{i-1}")
+              span nothing
+              div(class="detail") #{i}
+    div(class="ui bottom attached small violet icon message")
+      i(class="info circle icon")
+      | If the genres shown are "nothing", you have not given me enough training data to determine what genres you like. Please rate some more songs and come back!
+    div(class="ui padded piled segment content-stats")
+      h2(class="ui left aligned violet header")
+        i(class="heart icon")
+        div(class="content")
+          | musical features
+          div(class="sub header") you prefer music that is more...
+      for val, i in featureMapping
+        div(class="ui padded center aligned grid")
+          div(class="ui two column no-padding row")
+            div(class="left aligned column")
+              div(class="ui huge sub header") #{val.extremes[0]}
+            div(class="right aligned column")
+              div(class="ui huge sub header") #{val.extremes[1]}
+          div(class="ui row")
+            div(class="column")
+              div(class="ui violet tiny progress" id="bar-#{i}" data-percent="100")
+                div(class="bar")
+                div(class="ui circular violet icon button centered-element")
+                  i(class="#{val.icon} icon") 
+         br
+    div(class="ui center aligned top attached piled segment")
+      h2(class="ui violet header")
+        span(id="trained-songs")
+        div(class="sub header") number of songs i've been trained with
+    div(class="ui bottom attached small violet icon message")
+      i(class="configure icon")
+      | Your preferences are linked to your browser session. To start over, clear your site data. An easier way to start over is coming soon!
           
 block scripts  
   script(src="/js/socket.js")

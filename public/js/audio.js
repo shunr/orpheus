@@ -45,14 +45,16 @@ function playTrack(src) {
 }
 
 function animateProgress() {
+  $('#orpheus .dimmer').removeClass('active');
   $('#progress-overlay').stop();
   $('#progress-overlay').css("width", 0);
   $('#progress-overlay').show();
+   $('.action-button').removeClass('disabled');
+  $('.track-header').fadeIn();
   $('#progress-overlay').animate({
     width: "100%"
   }, 30 * 1000);
   siriWave.setAmplitude(0.3);
-  $('.action-button').removeClass('disabled');
 }
 
 function resetProgress() {
@@ -62,9 +64,18 @@ function resetProgress() {
 }
 
 function cooldown() {
+  $('#progress-overlay').stop();
   $('.action-button').addClass('disabled');
+  $('#orpheus .dimmer').addClass('active');
+  $('#progress-overlay').css("width", 0);
+  $('.track-header').fadeOut();
+  audio.pause();
 }
 
 function menu() {
   $('.menu-modal').modal('show');
+}
+
+function hideMenu() {
+  $('.menu-modal').modal('hide');
 }

@@ -3,6 +3,7 @@ const uuid = require('uuid/v4');
 const db = require('../orpheus/db');
 const train = require('../orpheus/train');
 const conf = require('../config');
+const featureMapping = require('../feature_mapping');
 const router = express.Router();
 
 let ready = false;
@@ -10,7 +11,7 @@ let ready = false;
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Orpheus - Quantify your music taste',
-    featureMapping: conf.featureMapping,
+    featureMapping: featureMapping,
     genres: db.loadGenres()
   });
 });
@@ -52,6 +53,7 @@ function _sendNextTrack(socket, token) {
 
 function _sendTrainingResults(socket, token) {
   train.getTrainingResults(token, function(data){
+    data.trainedSongs = db.getTrainedSongs(token);
     socket.emit('model_updated', data);
   });
 }

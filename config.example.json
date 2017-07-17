@@ -1,9 +1,10 @@
 {
   "spotify": {
     "clientId": "spotify-client-id",
-    "clientSecret": "spotify-client-secret",
+    "clientSecret": "spotify-client-secret"
   },
   "db": {
+    "firstInitialization": false,
     "storagePath": "/home/shun/orpheus_db/db.json",
     "modelDirectory": "/home/shun/orpheus_db/model"
   },
@@ -19,67 +20,5 @@
     "regularization": 1.0,
     "bias": 0.0,
     "algorithm": "CW"
-  },
-  "featureMapping": {
-    "acousticness": {
-      "min": 0,
-      "max": 1,
-      "key": 0,
-      "icon": "unmute"
-    },
-    "danceability": {
-      "min": 0,
-      "max": 1,
-      "key": 1,
-      "icon": "child"
-    },
-    "energy": {
-      "min": 0,
-      "max": 1,
-      "key": 2,
-      "icon": "lightning"
-    },
-    "instrumentalness": {
-      "min": 0,
-      "max": 1,
-      "key": 3,
-      "icon": "music"
-    },
-    "liveness": {
-      "min": 0,
-      "max": 1,
-      "key": 4,
-      "icon": "announcement"
-    },
-    "loudness": {
-      "min": -30,
-      "max": 0,
-      "key": 5,
-      "icon": "volume up"
-    },
-    "mode": {
-      "min": 0,
-      "max": 1,
-      "key": 6,
-      "icon": "cocktail"
-    },
-    "speechiness": {
-      "min": 0,
-      "max": 1,
-      "key": 7,
-      "icon": "talk"
-    },
-    "tempo": {
-      "min": 40,
-      "max": 180,
-      "key": 8,
-      "icon": "wait"
-    },
-    "valence": {
-      "min": 0,
-      "max": 1,
-      "key": 9,
-      "icon": "meh"
-    }
   }
 }

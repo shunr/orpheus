@@ -17,8 +17,16 @@ body {
   top: 16px;
 }
 
+#menu-header {
+  margin:0!important;
+}
+
 .column {
   text-align: center;
+}
+
+.no-padding {
+  padding: 0!important;
 }
 
 .progress .bar {
@@ -54,11 +62,7 @@ body {
 }
 
 .column-genre {
-  line-height: 2em!important;
-}
-
-.column-genre .header {
-  margin:0!important;
+  line-height: 3!important;
 }
 
 #bg-canvas {

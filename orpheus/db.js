@@ -16,7 +16,7 @@ db.defaults({
 }).write();
 
 function _getShuffledTracks(maxTracks) {
-  let keys = Object.keys(db.get('tracks').value());
+  let keys = db.get('tracks').keys().value();
   let shuffled = [];
   let n = 0;
   while (keys.length && n <= maxTracks) {
@@ -64,8 +64,14 @@ mod.createSession = function(token) {
   db.set(['sessions', token], {
     token: token,
     queuedTracks: _getShuffledTracks(conf.tracks.maxQueuedTracks),
-    currentTrack: 0
+    trainedSongs: 0
   }).write();
+}
+
+mod.getTrainedSongs = function(token) {
+  let queued = db.get(['sessions', token, 'queuedTracks']).size().value();
+  let maxQueued = Math.min(db.get('tracks').keys().value().length, conf.tracks.maxQueuedTracks);
+  return maxQueued - queued;
 }
 
 mod.removeSession = function(token) {

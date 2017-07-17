@@ -1,0 +1,103 @@
+  {
+    "acousticness": {
+      "min": 0,
+      "max": 1,
+      "key": 0,
+      "icon": "music",
+      "extremes": [
+        "electronic",
+        "acoustic"
+      ]
+    },
+    "danceability": {
+      "min": 0,
+      "max": 1,
+      "key": 1,
+      "icon": "child",
+      "extremes": [
+        "arrythmic",
+        "danceable"
+      ]
+    },
+    "energy": {
+      "min": 0,
+      "max": 1,
+      "key": 2,
+      "icon": "lightning",
+      "extremes": [
+        "mellow",
+        "energetic"
+      ]
+    },
+    "instrumentalness": {
+      "min": 0,
+      "max": 1,
+      "key": 3,
+      "icon": "unmute",
+      "extremes": [
+        "vocal",
+        "instrumental"
+      ]
+    },
+    "liveness": {
+      "min": 0,
+      "max": 1,
+      "key": 4,
+      "icon": "announcement",
+      "extremes": [
+        "studio",
+        "live"
+      ]
+    },
+    "loudness": {
+      "min": -16,
+      "max": 0,
+      "key": 5,
+      "icon": "volume up",
+      "extremes": [
+        "quiet",
+        "loud"
+      ]
+    },
+    "mode": {
+      "min": 0,
+      "max": 1,
+      "key": 6,
+      "icon": "cocktail",
+      "extremes": [
+        "minor",
+        "major"
+      ]
+    },
+    "speechiness": {
+      "min": 0,
+      "max": 1,
+      "key": 7,
+      "icon": "talk",
+      "extremes": [
+        "music",
+        "speech"
+      ]
+    },
+    "tempo": {
+      "min": 40,
+      "max": 180,
+      "key": 8,
+      "icon": "wait",
+      "extremes": [
+        "slow",
+        "fast"
+      ]
+    },
+    "valence": {
+      "min": 0,
+      "max": 1,
+      "key": 9,
+      "icon": "meh",
+      "extremes": [
+        "sad",
+        "happy"
+      ]
+    }
+
+  }

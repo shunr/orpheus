@@ -14,16 +14,15 @@ socket.on('new_token', function(data) {
 
 socket.on('ready', function(data) {
   nextTrack();
-  socket.on('new_track', function(data) {
-    console.log(data);
-    playTrack(data.preview_url);
-    $('.track-header span').text(data.name);
-    $('.track-header').fadeIn();
-  });
-  socket.on('model_updated', function(data) {
-    console.log(data);
-    stats.updateModel(data);
-  });
+});
+
+socket.on('new_track', function(data) {
+  playTrack(data.preview_url);
+  $('.track-header span').text(data.name);
+});
+
+socket.on('model_updated', function(data) {
+  stats.updateModel(data);
 });
 
 function nextTrack() {
