@@ -7,25 +7,45 @@ const featureMapping = require('../feature_mapping');
 let mod = module.exports = {};
 
 mod.trainModel = function(token, features, verdict, callback) {
-  let py = spawn('python3', ['orpheus/ml_scripts/train.py', token, JSON.stringify(features), verdict]);
+  let py = spawn('python3', [
+    'orpheus/ml_scripts/train.py', token, JSON.stringify(features), verdict
+  ]);
   py.stdout.on('data', function(data) {
     console.log(data.toString());
   });
   py.stdout.on('end', function() {
     callback();
   });
+  py.stderr.on('data', function(data) {
+    console.log(data.toString());
+  });
   py.stdin.end();
 };
 
 mod.getTrainingResults = function(token, callback) {
   let py = spawn('python3', [
-    'orpheus/ml_scripts/classify.py',
-    token,
+    'orpheus/ml_scripts/classify.py', 0, token,
     Object.keys(featureMapping).length,
     db.loadGenres().length
   ]);
   py.stdout.on('data', function(data) {
     callback(JSON.parse(data.toString()));
+  });
+  py.stderr.on('data', function(data) {
+    console.log(data.toString());
+  });
+  py.stdin.end();
+};
+
+mod.getPredictionFromFeatures = function(token, features, callback) {
+  let py = spawn('python3', [
+    'orpheus/ml_scripts/classify.py', 1, token, JSON.stringify(features)
+  ]);
+  py.stdout.on('data', function(data) {
+    callback(parseFloat(data.toString()));
+  });
+  py.stderr.on('data', function(data) {
+    console.log(data.toString());
   });
   py.stdin.end();
 };

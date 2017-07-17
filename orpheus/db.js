@@ -64,7 +64,7 @@ mod.createSession = function(token) {
   db.set(['sessions', token], {
     token: token,
     queuedTracks: _getShuffledTracks(conf.tracks.maxQueuedTracks),
-    trainedSongs: 0
+    genreRatings: {}
   }).write();
 }
 

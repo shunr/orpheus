@@ -46,8 +46,10 @@ function _learningListener(socket, token) {
 
 function _sendNextTrack(socket, token) {
   let id = db.getNextTrack(token);
-  socket.emit('new_track', db.getTrackFromId(id));
+  let track = db.getTrackFromId(id);
+  socket.emit('new_track', track);
   _sendTrainingResults(socket, token);
+  _sendTrackPrediction(socket, token, track.features);
   return id;
 }
 
@@ -55,6 +57,12 @@ function _sendTrainingResults(socket, token) {
   train.getTrainingResults(token, function(data){
     data.trainedSongs = db.getTrainedSongs(token);
     socket.emit('model_updated', data);
+  });
+}
+
+function _sendTrackPrediction(socket, token, features) {
+  train.getPredictionFromFeatures(token, features, function(data){
+    socket.emit('new_prediction', data);
   });
 }
 

@@ -8,12 +8,13 @@
     "storagePath": "/home/shun/orpheus_db/db.json",
     "modelDirectory": "/home/shun/orpheus_db/model"
   },
-   "tracks": {
+  "tracks": {
     "minPopularity": 10,
     "tracksPerGenre": 10,
     "maxQueuedTracks": 1000,
     "ignoredGenres": [
-      "comedy"
+      "comedy",
+      "new-release"
     ]
   },
   "hyperParams": {

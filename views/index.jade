@@ -57,6 +57,22 @@ block content
         div(class="content")
           | your music tastes
           div(class="sub header") here's what orpheus learned about your listening preferences
+    div(class="ui center aligned top attached piled segment")
+      h2(class="ui left aligned violet header")
+        i( class="pie chart icon")
+        div(class="content")
+          | at a glance
+          div(class="sub header") some basic information
+      h2(class="ui violet header")
+        span(id="trained-songs") 0
+        div(class="sub header") number of songs orpheus has analysed
+      h2(class="ui violet header")
+        div(id="preference-chance" class="ui indicating small progress")
+          div(class="bar")
+        div(class="sub header") chance you'll like the song playing now
+    div(class="ui bottom attached small violet icon message")
+      i(class="configure icon")
+      | Your preferences are linked to your browser session. To start over, clear your site data. An easier way to start over is coming soon!
     div(class="ui top attached piled segment")
       div(class="ui stackable two column grid")
         div(class="column column-genre")
@@ -100,15 +116,10 @@ block content
               div(class="ui violet tiny progress" id="bar-#{i}" data-percent="100")
                 div(class="bar")
                 div(class="ui circular violet icon button centered-element")
-                  i(class="#{val.icon} icon") 
+                  i(class="#{val.icon} icon")
          br
-    div(class="ui center aligned top attached piled segment")
-      h2(class="ui violet header")
-        span(id="trained-songs")
-        div(class="sub header") number of songs i've been trained with
-    div(class="ui bottom attached small violet icon message")
-      i(class="configure icon")
-      | Your preferences are linked to your browser session. To start over, clear your site data. An easier way to start over is coming soon!
+  button(id="mute-button" class="ui tiny circular inverted icon button" onclick="toggleMute()")
+    i(class="volume up icon")
           
 block scripts  
   script(src="/js/socket.js")

@@ -17,8 +17,16 @@ socket.on('ready', function(data) {
 });
 
 socket.on('new_track', function(data) {
-  playTrack(data.preview_url);
-  $('.track-header span').text(data.name);
+  if (data) {
+    playTrack(data.preview_url);
+    $('.track-header span').text(data.name);
+  } else {
+    $('#orpheus .dimmer').removeClass('active');
+  }
+});
+
+socket.on('new_prediction', function(data) {
+  stats.updatePreference(data);
 });
 
 socket.on('model_updated', function(data) {

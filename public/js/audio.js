@@ -1,4 +1,5 @@
 var siriWave;
+var AUDIO_VOLUME = 0.8;
 var audio = document.getElementById("audio");
 
 var granimInstance = new Granim({
@@ -22,6 +23,11 @@ var granimInstance = new Granim({
 });
 
 $(document).ready(function() {
+  audio.volume = AUDIO_VOLUME;
+  $(".progress").progress({
+    percent: 100,
+    autoSuccess: false
+  });
   $('.start-modal').modal({
     closable: false
   }).modal('show');
@@ -39,7 +45,6 @@ $(document).ready(function() {
 
 function playTrack(src) {
   audio.src = src;
-  audio.volume = 0.8;
   audio.load();
   audio.play();
 }
@@ -50,7 +55,7 @@ function animateProgress() {
   $('#progress-overlay').stop();
   $('#progress-overlay').css("width", 0);
   $('#progress-overlay').show();
-   $('.action-button').removeClass('disabled');
+  $('.action-button').removeClass('disabled');
   $('.track-header').fadeIn();
   $('#progress-overlay').animate({
     width: "100%"
@@ -70,8 +75,20 @@ function cooldown() {
   $('.action-button').addClass('disabled');
   $('#orpheus .dimmer').addClass('active');
   $('#progress-overlay').css("width", 0);
-  $('.track-header').fadeOut();
+  $('.track-header').hide();
   audio.pause();
+}
+
+function toggleMute() {
+  if (audio.volume !== 0) {
+    audio.volume = 0;
+    $('#mute-button .icon').removeClass('up')
+    $('#mute-button .icon').addClass('off')
+  } else {
+    audio.volume = AUDIO_VOLUME;
+    $('#mute-button .icon').removeClass('off')
+    $('#mute-button .icon').addClass('up')
+  }
 }
 
 function menu() {
