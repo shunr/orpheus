@@ -11,6 +11,8 @@ block content
     h2(class="ui center aligned inverted header track-header" style="display: none")
       div(class="ui sub header") now playing
       span(id="current-track")
+    button(id="rewind" class="ui centered-element circular huge icon button black action-button" data-tooltip="Replay?" data-inverted="" onclick="audio.play()" style="display: none")
+      i(class="undo icon")
     div(id="controls" class="ui card center align")
       div(class="content")
         div(class="ui center aligned four column grid")

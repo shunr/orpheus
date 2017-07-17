@@ -45,6 +45,7 @@ function playTrack(src) {
 }
 
 function animateProgress() {
+  $('#rewind').hide();
   $('#orpheus .dimmer').removeClass('active');
   $('#progress-overlay').stop();
   $('#progress-overlay').css("width", 0);
@@ -61,6 +62,7 @@ function resetProgress() {
   $('#progress-overlay').fadeOut();
   siriWave.setAmplitude(0.01);
   $('.track-header').fadeOut();
+  $('#rewind').show();
 }
 
 function cooldown() {
